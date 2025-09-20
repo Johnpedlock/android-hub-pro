@@ -1,0 +1,12 @@
+<section>
+  <h1>Contact</h1>
+  <% if (typeof success !== "undefined" && success) { %><div class="alert success"><%= success %></div><% } %>
+  <% if (errors && errors.length) { %><div class="alert error"><ul><% errors.forEach(e => { %><li><%= e.msg %></li><% }) %></ul></div><% } %>
+  <form method="post" action="/contact" class="form">
+    <label>Name<input type="text" name="name" value="<%= (data && data.name) || '' %>" required /></label>
+    <label>Email<input type="email" name="email" value="<%= (data && data.email) || '' %>" required /></label>
+    <label>Message<textarea name="message" rows="5" required><%= (data && data.message) || '' %></textarea></label>
+    <button type="submit" class="btn">Send</button>
+  </form>
+</section>
+

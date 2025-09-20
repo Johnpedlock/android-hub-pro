@@ -1,0 +1,29 @@
+<section class="grid hero-grid">
+  <div class="hero-copy">
+    <h1 class="h1">Advanced Class: <span class="highlight">Mastering Android Internals</span></h1>
+    <p>Go beyond basics into real Android internals with live, practical sessions. Learn modern debugging, security layers, and system components—taught by <strong><%= instructor %></strong>. Built for serious learners who want job-ready skills.</p>
+    <ul class="checklist">
+      <li>Hands-on device/emulator labs</li>
+      <li>Reverse engineering & secure workflows</li>
+      <li>Professional checklists and tooling</li>
+      <li>Private Q&amp;A and code reviews</li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn" href="/register">Register now (<%= fee %>)</a>
+      <% if (whatsapp) { %>
+        <a class="btn ghost" href="https://wa.me/<%= whatsapp.replace(/[^0-9]/g,'') %>?text=<%= encodeURIComponent('Hello, I want to join the Advanced Class.') %>" target="_blank" rel="noopener">WhatsApp us</a>
+      <% } %>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="/images/instructor.png" alt="Instructor <%= instructor %>" />
+  </div>
+</section>
+
+<section class="stripe">
+  <div class="pill">Live · Practical · Advanced</div>
+  <div class="pill">Recordings provided</div>
+  <div class="pill">Career-focused</div>
+  <div class="pill">Small cohort</div>
+</section>
+

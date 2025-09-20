@@ -1,0 +1,19 @@
+<section>
+  <h1>Proof Uploads</h1>
+  <% if (!files.length) { %>
+    <p class="muted">No files in uploads yet.</p>
+  <% } else { %>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead><tr><th>File</th><th>Size (bytes)</th><th>Action</th></tr></thead>
+      <tbody>
+        <% files.forEach(f => { %>
+          <tr>
+            <td><%= f.name %></td>
+            <td><%= f.size %></td>
+            <td><a class="link" href="/admin/proof/<%= f.name %>">download</a></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>

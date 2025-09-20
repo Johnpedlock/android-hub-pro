@@ -1,0 +1,21 @@
+<section>
+  <h1>Messages</h1>
+  <p><a class="link" href="/admin/export/messages.csv">⬇ Download CSV</a></p>
+  <% if (!msgs.length) { %>
+    <p class="muted">No messages yet.</p>
+  <% } else { %>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Message</th></tr></thead>
+      <tbody>
+        <% msgs.forEach(m => { %>
+          <tr>
+            <td><%= m._ts %></td>
+            <td><%= m.name %></td>
+            <td><%= m.email %></td>
+            <td style="max-width:560px"><%= m.message %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>

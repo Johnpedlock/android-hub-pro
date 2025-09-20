@@ -1,0 +1,62 @@
+<section>
+  <h1>Register for the Advanced Class</h1>
+  <p>
+    <strong>Course:</strong> Mastering Android Internals (Advanced) <br/>
+    <strong>Instructor:</strong> <%= instructor %> <br/>
+    <strong>Fee:</strong> <%= fee %>
+  </p>
+
+  <div class="notice" style="border-color:#1e3a29;background:#0b1410">
+  <p><strong>How to pay</strong></p>
+  <ul>
+    <li>
+      Transfer <strong><%= fee %></strong> to
+      <strong>First Bank — Ituma Christian Uchenna Account: 3090014944</strong>
+    </li>
+    <li>
+      Then upload your proof of payment below or email it to
+      <a class="link" href="mailto:<%= contactEmail %>"><%= contactEmail %></a>
+    </li>
+  </ul>
+
+  <button class="btn ghost" type="button" data-copy="3090014944">Copy First Bank Account</button>
+</div>
+
+
+  <% if (typeof success !== "undefined" && success) { %>
+    <div class="alert success"><%= success %></div>
+  <% } %>
+
+  <% if (errors && errors.length) { %>
+    <div class="alert error">
+      <ul>
+        <% errors.forEach(e => { %>
+          <li><%= e.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <form method="post" action="/register" class="form" enctype="multipart/form-data">
+    <label>Full Name
+      <input type="text" name="fullName" value="<%= (data && data.fullName) || '' %>" required />
+    </label>
+    <label>Email
+      <input type="email" name="email" value="<%= (data && data.email) || '' %>" required />
+    </label>
+    <label>WhatsApp Number
+      <input type="text" name="whatsapp" placeholder="+234..." value="<%= (data && data.whatsapp) || '' %>" required />
+    </label>
+
+    <label>Upload Proof of Payment (optional)
+      <input type="file" name="proof" accept=".jpg,.jpeg,.png,.pdf" />
+    </label>
+
+    <label>Note (optional)
+      <textarea name="note" rows="4"><%= (data && data.note) || '' %></textarea>
+    </label>
+
+    <button type="submit" class="btn">Submit Registration</button>
+  </form>
+</section>
+

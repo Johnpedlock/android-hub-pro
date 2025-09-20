@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("partials/head") %>
+  <body class="bg-surface text-fg">
+    <header class="nav">
+      <a href="/" class="brand"><%= appName %></a>
+      <nav class="links">
+        <a href="/">Home</a>
+        <a href="/syllabus">Syllabus</a>
+        <a href="/about">About</a>
+        <a href="/register">Register</a>
+        <a href="/contact">Contact</a>
+        <!-- Admin button (always visible; auth happens on the route) -->
+        <a href="/admin" class="btn" style="padding:.5rem .8rem; margin-left:.6rem;">Admin</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <%- body %>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; <%= new Date().getFullYear() %> <%= appName %>. All rights reserved.</p>
+      <!-- Backup Admin link in footer too -->
+      <p><a class="link" href="/admin">Go to Admin</a></p>
+    </footer>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
+

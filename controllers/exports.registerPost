@@ -1,0 +1,49 @@
+exports.registerPost = [
+  upload.single("proof"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    const data = {
+      fullName: req.body.fullName,
+      email: req.body.email,
+      whatsapp: req.body.whatsapp,
+      note: req.body.note || "",
+      proof: req.file ? req.file.filename : null
+    };
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("pages/register", {
+        title: "Register — Advanced Class",
+        errors: errors.array(),
+        data,
+        wa: ""
+      });
+    }
+
+    // SAVE registration
+    store.append("registrations.jsonl", data);
+
+    // Optional email
+    try {
+      await maybeSendMail({
+        subject: "New Advanced Class Registration",
+        html: `<h2>New Registration</h2>
+          <p><b>Name:</b> ${data.fullName}</p>
+          <p><b>Email:</b> ${data.email}</p>
+          <p><b>WhatsApp:</b> ${data.whatsapp}</p>
+          <p><b>Note:</b> ${data.note}</p>
+          <p><b>Proof:</b> ${data.proof || "none"}</p>`
+      });
+    } catch (e) {
+      console.error("Mail error:", e.message);
+    }
+
+    res.render("pages/register", {
+      title: "Register — Advanced Class",
+      errors: [],
+      data: {},
+      wa: "",
+      success: "Registration received! We’ll confirm on WhatsApp and email with your class link after verifying your payment."
+    });
+  }
+];
+

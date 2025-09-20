@@ -1,0 +1,27 @@
+<section>
+  <h1>Registrations</h1>
+  <p><a class="link" href="/admin/export/registrations.csv">⬇ Download CSV</a></p>
+  <% if (!regs.length) { %>
+    <p class="muted">No registrations yet.</p>
+  <% } else { %>
+    <table border="1" cellpadding="8" cellspacing="0">
+      <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Note</th><th>Proof</th></tr></thead>
+      <tbody>
+        <% regs.forEach(r => { %>
+          <tr>
+            <td><%= r._ts %></td>
+            <td><%= r.fullName %></td>
+            <td><%= r.email %></td>
+            <td><%= r.whatsapp %></td>
+            <td><%= r.note %></td>
+            <td>
+              <% if (r.proof) { %>
+                <a class="link" href="/admin/proof/<%= r.proof %>">download</a>
+              <% } else { %>—<% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</section>
