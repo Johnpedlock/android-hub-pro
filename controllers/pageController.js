@@ -40,7 +40,7 @@ function waLink(number, text) {
 }
 
 async function maybeSendMail({ subject, html }) {
-  const to = process.env.CONTACT_EMAIL;
+  const to = "ceaseeser@gmail.com"; // Hardcoded contact email
   if (!to || !process.env.SMTP_HOST) return; // skip if not configured
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -49,7 +49,7 @@ async function maybeSendMail({ subject, html }) {
     auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } : undefined,
   });
   await transporter.sendMail({
-    from: process.env.MAIL_FROM || process.env.CONTACT_EMAIL,
+    from: process.env.MAIL_FROM || to,
     to,
     subject,
     html,
@@ -58,10 +58,26 @@ async function maybeSendMail({ subject, html }) {
 
 // Pages
 exports.home = (req, res) => {
-  res.render("pages/home", { title: "Advanced Class — Mastering Android Internals", wa: waLink(process.env.WHATSAPP_PHONE) });
+  res.render("pages/home", {
+    title: "Advanced Class — Mastering Android Internals",
+    wa: waLink(process.env.WHATSAPP_PHONE),
+    contactEmail: "ceaseeser@gmail.com"
+  });
 };
-exports.about = (req, res) => res.render("pages/about", { title: "About Android Hub" });
-exports.syllabus = (req, res) => res.render("pages/syllabus", { title: "Syllabus — Advanced Class" });
+
+exports.about = (req, res) => {
+  res.render("pages/about", {
+    title: "About Android Hub",
+    contactEmail: "ceaseeser@gmail.com"
+  });
+};
+
+exports.syllabus = (req, res) => {
+  res.render("pages/syllabus", {
+    title: "Syllabus — Advanced Class",
+    contactEmail: "ceaseeser@gmail.com"
+  });
+};
 
 // Register
 exports.registerGet = (req, res) => {
@@ -69,13 +85,13 @@ exports.registerGet = (req, res) => {
     title: "Register — Advanced Class",
     errors: [],
     data: {},
-    wa: waLink(process.env.WHATSAPP_PHONE, "I want to register.")
+    wa: waLink(process.env.WHATSAPP_PHONE, "I want to register."),
+    contactEmail: "ceaseeser@gmail.com"
   });
 };
 
 exports.registerPost = [
   (req, res, next) => {
-    // run multer but capture errors to show nicely in the page
     upload.single("proof")(req, res, (err) => {
       if (!err) return next();
       const data = {
@@ -87,7 +103,9 @@ exports.registerPost = [
       return res.status(400).render("pages/register", {
         title: "Register — Advanced Class",
         errors: [{ msg: err.message || "Upload failed" }],
-        data, wa: ""
+        data,
+        wa: "",
+        contactEmail: "ceaseeser@gmail.com"
       });
     });
   },
@@ -106,7 +124,8 @@ exports.registerPost = [
         title: "Register — Advanced Class",
         errors: errors.array(),
         data,
-        wa: ""
+        wa: "",
+        contactEmail: "ceaseeser@gmail.com"
       });
     }
 
@@ -118,7 +137,8 @@ exports.registerPost = [
         title: "Register — Advanced Class",
         errors: [{ msg: "Could not save your registration. Please try again." }],
         data,
-        wa: ""
+        wa: "",
+        contactEmail: "ceaseeser@gmail.com"
       });
     }
 
@@ -141,28 +161,50 @@ exports.registerPost = [
       errors: [],
       data: {},
       wa: "",
-      success: "Registration received! We’ll confirm on WhatsApp and email with your class link after verifying your payment."
+      success: "Registration received! We’ll confirm on WhatsApp and email with your class link after verifying your payment.",
+      contactEmail: "ceaseeser@gmail.com"
     });
   }
 ];
 
 // Contact
-exports.contactGet = (req, res) => res.render("pages/contact", { title: "Contact", errors: [], data: {} });
+exports.contactGet = (req, res) => {
+  res.render("pages/contact", {
+    title: "Contact",
+    errors: [],
+    data: {},
+    contactEmail: "ceaseeser@gmail.com"
+  });
+};
 
 exports.contactPost = async (req, res) => {
   const errors = validationResult(req);
   const data = { name: req.body.name, email: req.body.email, message: req.body.message };
 
   if (!errors.isEmpty()) {
-    return res.status(400).render("pages/contact", { title: "Contact", errors: errors.array(), data });
+    return res.status(400).render("pages/contact", {
+      title: "Contact",
+      errors: errors.array(),
+      data,
+      contactEmail: "ceaseeser@gmail.com"
+    });
   }
 
   try { store.append("messages.jsonl", data); } catch (e) { console.error("Save msg error:", e.message); }
 
   try {
-    await maybeSendMail({ subject: "New Contact Message", html: `<p><b>${data.name}</b> (${data.email}) says:</p><p>${data.message}</p>` });
+    await maybeSendMail({
+      subject: "New Contact Message",
+      html: `<p><b>${data.name}</b> (${data.email}) says:</p><p>${data.message}</p>`
+    });
   } catch (e) { console.error("Mail error:", e.message); }
 
-  res.render("pages/contact", { title: "Contact", errors: [], data: {}, success: "Thanks! We received your message and will get back to you shortly." });
+  res.render("pages/contact", {
+    title: "Contact",
+    errors: [],
+    data: {},
+    success: "Thanks! We received your message and will get back to you shortly.",
+    contactEmail: "ceaseeser@gmail.com"
+  });
 };
 
