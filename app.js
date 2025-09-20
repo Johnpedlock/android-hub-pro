@@ -50,3 +50,8 @@ app.listen(PORT, () => {
   console.log(`✅ ${process.env.APP_NAME || "Android Hub"} running at http://localhost:${PORT}`);
 });
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
+
