@@ -23,7 +23,7 @@ app.locals.appName = process.env.APP_NAME || "Android Hub";
 app.locals.instructor = process.env.INSTRUCTOR || "Ituma Christian Uchenna"; // ✅ updated
 app.locals.title = "Mastering Android Internals"; // default title
 app.locals.fee = process.env.FEE || "₦5000"; // ✅ default fee
-app.locals.whatsapp = process.env.WHATSAPP || "+2348012345678"; // ✅ default WhatsApp
+app.locals.whatsapp = process.env.WHATSAPP || "+2347035476242"; // ✅ default WhatsApp
 
 // Routes
 app.use("/", require("./routes/index"));
